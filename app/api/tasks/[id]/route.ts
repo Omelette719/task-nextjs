@@ -8,16 +8,17 @@ function getSessionId(req: NextRequest): string {
 // PUT /api/tasks/[id] — update a task
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     const sessionId = getSessionId(req);
-    const { id } = params;
+    const id = context.params.id;
     const body = await req.json();
 
     const updates: Partial<{ title: string; description: string; status: TaskStatus }> = {};
     if (body.title !== undefined) updates.title = body.title;
     if (body.description !== undefined) updates.description = body.description;
+
     if (body.status !== undefined) {
       const validStatuses: TaskStatus[] = ['pending', 'in_progress', 'completed'];
       if (!validStatuses.includes(body.status)) {
@@ -41,11 +42,12 @@ export async function PUT(
 // DELETE /api/tasks/[id] — delete a task
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     const sessionId = getSessionId(req);
-    const { id } = params;
+    const id = context.params.id;
+
     const deleted = dbDeleteTask(id, sessionId);
 
     if (!deleted) {
