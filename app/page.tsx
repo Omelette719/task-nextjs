@@ -64,7 +64,7 @@ export default function HomePage() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
-            <h1 className="text-4xl font-bold text-gray-900">Task Manager</h1>
+            <h1 className="text-4xl font-bold text-gray-900">Task Manager App</h1>
             {!showForm && !editingTask && (
               <button
                 onClick={() => setShowForm(true)}
